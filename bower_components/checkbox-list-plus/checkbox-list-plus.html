@@ -1,0 +1,112 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../checkbox-plus/checkbox-plus.html">
+
+<!--
+`checkbox-list-plus`
+A simple list of checkbox-plus elements
+
+@demo demo/index.html 
+-->
+
+<dom-module id="checkbox-list-plus">
+  <template>
+    <template is="dom-repeat" items="{{items}}">
+
+      <checkbox-plus
+       on-change="_returnItemsChecked"
+       label$="[[getLabel(item,attrForLabel)]]"
+       checked$="[[getCheck(item,attrForCheck)]]"
+       required$="[[getRule(rules,item,attrForSelect,index,'required')]]"
+       disabled$="[[getRule(rules,item,attrForSelect,index,'disabled')]]">
+      </checkbox-plus>
+    </template>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'checkbox-list-plus',
+
+      ready:function(){
+        // Set attrForCheck
+        this.items=this.items.map(function(item) {
+          if(item[this.attrForCheck]==undefined) {
+            item[this.attrForCheck] = true;
+          }
+          return item;
+        }.bind(this));
+      },
+
+      _returnItemsChecked:function(e){
+          this.set("items."+ e.model.index+"."+this.attrForCheck, e.detail);
+      },
+
+      getLabel:function(item,attrForLabel){
+        return item[attrForLabel];
+      },
+
+      getCheck:function(item,attrForCheck){
+        return item[attrForCheck];
+      },
+
+     getRule:function(rules,item,attrForSelect,index,ruleSelected){
+       var currentItemRule;
+       try {
+          currentItemRule = rules[item[attrForSelect]][ruleSelected];
+       } catch(e) {
+         // attForSelected NOT DEFINED OR RULE SET BY ID
+          currentItemRule = this.get('rules.'+index+'.'+ruleSelected);
+       }
+       return (currentItemRule != undefined ?
+               currentItemRule : false);
+      },
+
+      _itemsChanged:function() {
+        this.set("itemsChecked",this.items.filter(function(item){
+          return item[this.attrForCheck]
+        }.bind(this)));
+        this.set("indexesChecked",this.itemsChecked.map(function(itemChecked){
+              return this.items.indexOf(itemChecked)
+        }.bind(this)));
+          //console.log(this.indexesChecked)
+      },
+
+      observers:[
+          "_itemsChanged(items.*)"
+      ],
+
+      properties: {
+        attrForSelect:{
+          type:String,
+          value:null
+        },
+        attrForCheck:{
+          type:String,
+          value:"checked"
+        },
+        attrForLabel:{
+            type:String,
+            value:"label"
+        },
+        rules:{
+            type:Array,
+            value:null
+        },
+        items: {
+            type:Array,
+            value: null,
+            notify:true
+        },
+        itemsChecked:{
+            type:Array,
+            value:null,
+            notify:true
+        },
+        indexesChecked:{
+            type:Array,
+            value:[],
+            notify:true
+        }
+      }
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,7 @@
+{
+  "name": "checkbox-list-demo-plus",
+  "short_name": "checkbox-list-demo-plus",
+  "description": "The demo of the checkbox-list-plus element",
+  "start_url": "/",
+  "display": "standalone"
+}

@@ -1,0 +1,115 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/checkbox-list-plus/checkbox-list-plus.html">
+<script src="../../bower_components/webcomponentsjs/webcomponents.js"></script>
+
+<dom-module id="checkbox-list-demo-plus-app">
+  <template>
+    <style>
+      /* EXAMPLE */
+      :host{
+        --checkbox-plus-checkbox-container:{
+            margin: 4px;
+         };
+        --checkbox-plus-checkbox:{
+            margin-right: 4px;
+            font-size:var(--checkbox-plus-font-size);
+            border: 2px #505050 solid;
+
+        };
+        --checkbox-plus-checkbox-checked:{
+            background-color: transparent;
+        };
+        --checkbox-plus-checkbox-unchecked:{
+        };
+
+        --checkbox-plus-checkmark{
+           color:#505050;
+         }
+        --checkbox-plus-label:{
+            color:#505050;
+            margin-left: 4px;
+            font-size:var(--checkbox-plus-font-size)
+        };
+        --checkbox-plus-label-checked:{
+        };
+        --checkbox-plus-label-unchecked:{
+        };
+        --checkbox-plus-font-size:20px;
+      }
+      .demo-style{
+          font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+      }
+      .checked-container{
+          text-align: center;
+          border: 2px #579653 solid;
+          border-radius:5px;
+          font-size: 20px;
+          width: 260px;
+      }
+      .indexes{
+        font-size:16px;
+      }
+    </style>
+    <!-- HTML -->
+    <div class="demo-style">
+      <h1>A &ltcheckbox-list-plus&gt</h1>
+      <checkbox-list-plus
+        items="{{items}}"
+        items-checked="{{itemsChecked}}"
+        indexes-checked="{{indexesChecked}}"
+        rules="[[rules]]"
+        attr-for-select="[[attrForSelect]]">
+      </checkbox-list-plus>
+      <h1>You have chosen</h1>
+      <div class="checked-container">
+        <template is="dom-repeat" items="[[itemsChecked]]">
+          <div class="items">[[item.label]]</div>
+        </template>
+      </div>
+      <p class="indexes">Indexes of chosen values: [[indexesChecked]]</p>
+    </div>
+  </template>
+
+  <!-- JAVASCRIPT (POLYMER) -->
+  <script>
+    Polymer({
+      is: 'checkbox-list-demo-plus-app',
+
+      properties:{
+        attrForSelect:{
+          type:String,
+          value:"label"
+        },
+        items:{
+          type:Array,
+          value:[
+            {label:"Larry Page",checked:true},
+            {label:"Linus Torvalds",checked:true},
+            {label:"Steve Jobs",checked:true},
+            {label:"Bill Gates",checked:true},
+            {label:"Simone Brocco",checked:false}
+          ]
+        },
+        itemsChecked:{
+          type:Array,
+          value:[]
+        },
+        indexesChecked:{
+          type:Array,
+          value:[],
+        },
+        rules:{
+          type:Array,
+          value:{
+            "1":{
+              disabled:true
+            },
+            "Simone Brocco":{
+              disabled:true
+            }
+          }
+        }
+      }
+    });
+  </script>
+</dom-module>
