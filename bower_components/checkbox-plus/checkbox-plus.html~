@@ -26,7 +26,7 @@ A simple checkbox
             min-height:calc(var(--checkbox-plus-font-size)*1.2);
             max-height:calc(var(--checkbox-plus-font-size)*1.2);
             text-align: center;
-            border-radius:20%;
+            border-radius:50%;
             cursor:pointer;
 
         }
